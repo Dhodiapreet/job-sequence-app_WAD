@@ -1,0 +1,64 @@
+@model JobSequenceApp.Models.JobSequence
+
+@{
+    ViewData["Title"] = "Active Job";
+}
+
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-body p-5">
+        <h2 class="mb-4 text-dark">Job Details</h2>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5 class="text-muted mb-3">Booking Information</h5>
+                <p><strong>Customer:</strong> @Model.Booking?.CustomerProfile?.ApplicationUser?.FirstName @Model.Booking?.CustomerProfile?.ApplicationUser?.LastName</p>
+                <p><strong>Service:</strong> @Model.Booking?.Service</p>
+                <p><strong>Title:</strong> @Model.Booking?.Title</p>
+                <p><strong>Description:</strong> @Model.Booking?.Description</p>
+                <p><strong>Location:</strong> @Model.Booking?.Location</p>
+            </div>
+            <div class="col-md-6">
+                <h5 class="text-muted mb-3">Schedule Information</h5>
+                <p><strong>Date:</strong> @Model.StartTime.ToShortDateString()</p>
+                <p><strong>Time:</strong> @Model.StartTime.ToShortTimeString() - @Model.EndTime.ToShortTimeString()</p>
+                <p><strong>Sequence ID:</strong> #@Model.Id</p>
+                <p>
+                    <strong>Status:</strong> 
+                    <span class="badge @(Model.Status == "Completed" ? "bg-success" : Model.Status == "InProgress" ? "bg-warning text-dark" : "bg-primary") px-3 py-2 fs-6">
+                        @Model.Status.ToUpper()
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2">Back to Schedule</a>
+            
+            <div>
+                @if (Model.Status == "Scheduled" && Model.Booking?.Status == "ACCEPTED")
+                {
+                    <form asp-action="StartJob" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary px-4 py-2 fs-5">
+                            <span class="material-symbols-outlined align-middle me-2">play_arrow</span> Start Job
+                        </button>
+                    </form>
+                }
+                else if (Model.Status == "InProgress")
+                {
+                    <a asp-action="CompleteJob" asp-route-id="@Model.Id" class="btn btn-success px-4 py-2 fs-5">
+                        <span class="material-symbols-outlined align-middle me-2">check_circle</span> Complete Job
+                    </a>
+                }
+                else if (Model.Status == "Completed")
+                {
+                    <button class="btn btn-success px-4 py-2 fs-5" disabled>
+                        <span class="material-symbols-outlined align-middle me-2">done_all</span> Job Completed
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

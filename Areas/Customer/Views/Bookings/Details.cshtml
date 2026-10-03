@@ -1,0 +1,71 @@
+@model JobSequenceApp.Models.Booking
+
+@{
+    ViewData["Title"] = "Booking Details";
+}
+
+<h2>Booking Details</h2>
+
+<div class="card mt-4 border-0 shadow-sm">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center p-4">
+        <h5 class="mb-0">@Model.Title</h5>
+        <span class="badge bg-light text-primary fs-6">@Model.Status</span>
+    </div>
+    <div class="card-body p-4">
+        
+        <h5 class="mb-3 text-muted border-bottom pb-2">Job Lifecycle</h5>
+        <div class="d-flex justify-content-between mb-5 text-center">
+            <div class="flex-fill">
+                <span class="material-symbols-outlined fs-2 text-primary">done</span><br />
+                <small class="fw-bold">Requested</small>
+            </div>
+            <div class="flex-fill">
+                <span class="material-symbols-outlined fs-2 @(Model.Status != "REQUESTED" && Model.Status != "DECLINED" && Model.Status != "CANCELLED" ? "text-primary" : "text-muted")">@(Model.Status != "REQUESTED" && Model.Status != "DECLINED" && Model.Status != "CANCELLED" ? "done" : "radio_button_unchecked")</span><br />
+                <small class="fw-bold @(Model.Status != "REQUESTED" && Model.Status != "DECLINED" && Model.Status != "CANCELLED" ? "" : "text-muted")">Accepted</small>
+            </div>
+            <div class="flex-fill">
+                <span class="material-symbols-outlined fs-2 @(Model.Status == "IN_PROGRESS" || Model.Status == "COMPLETED" ? "text-primary" : "text-muted")">@(Model.Status == "IN_PROGRESS" || Model.Status == "COMPLETED" ? "done" : "radio_button_unchecked")</span><br />
+                <small class="fw-bold @(Model.Status == "IN_PROGRESS" || Model.Status == "COMPLETED" ? "" : "text-muted")">In Progress</small>
+            </div>
+            <div class="flex-fill">
+                <span class="material-symbols-outlined fs-2 @(Model.Status == "COMPLETED" ? "text-success" : "text-muted")">@(Model.Status == "COMPLETED" ? "done_all" : "radio_button_unchecked")</span><br />
+                <small class="fw-bold @(Model.Status == "COMPLETED" ? "text-success" : "text-muted")">Completed</small>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="text-secondary mb-3">Worker Details</h6>
+                <div class="p-3 bg-light rounded">
+                    <p class="mb-1">
+                        <span class="material-symbols-outlined align-middle me-2 fs-5">person</span>
+                        <strong>@Model.WorkerProfile?.ApplicationUser?.FirstName @Model.WorkerProfile?.ApplicationUser?.LastName</strong>
+                    </p>
+                    <p class="mb-0 ms-4">@Model.WorkerProfile?.Profession</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-secondary mb-3">Job Details</h6>
+                <div class="p-3 bg-light rounded">
+                    <p class="mb-1"><strong>Service:</strong> @Model.Service</p>
+                    <p class="mb-1"><strong>Location:</strong> @Model.Location</p>
+                    <p class="mb-1"><strong>Date:</strong> @Model.ExpectedStartTime.ToShortDateString()</p>
+                    <p class="mb-0"><strong>Time:</strong> @Model.ExpectedStartTime.ToShortTimeString() - @Model.ExpectedEndTime.ToShortTimeString()</p>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4" />
+        <h6 class="text-secondary">Description</h6>
+        <p class="bg-light p-3 rounded">@Model.Description</p>
+    </div>
+    <div class="card-footer bg-white p-4 d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-outline-secondary px-4">Back to List</a>
+        
+        @if (Model.Status == "COMPLETED")
+        {
+            <a asp-action="WriteReview" asp-route-id="@Model.Id" class="btn btn-primary px-4">
+                <span class="material-symbols-outlined align-middle me-2 fs-5">star</span> Write Review
+            </a>
+        }
+    </div>
+</div>

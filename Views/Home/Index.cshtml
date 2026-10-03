@@ -1,0 +1,126 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="landing-page">
+    <section class="hero text-center py-5 bg-primary text-white mb-5 rounded shadow-sm">
+        <h1 class="display-3 fw-bold">JOB SEQUENCE</h1>
+        <p class="lead mb-4">Blue-collar workforce management, without the scheduling chaos.</p>
+        <p class="mb-5">Find skilled workers, check availability, book jobs, and manage conflict-free schedules from one platform.</p>
+        <div>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-light btn-lg me-3 px-4 fw-bold">Find a Worker</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-light btn-lg px-4">Join as a Worker</a>
+        </div>
+    </section>
+
+    <section class="how-it-works py-5">
+        <h2 class="text-center mb-5 fw-bold">How Job Sequence Works</h2>
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <span class="material-symbols-outlined display-4 text-primary mb-3">search</span>
+                    <h4>DISCOVER</h4>
+                    <p class="text-muted">Find skilled workers based on service, skill, location and availability.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <span class="material-symbols-outlined display-4 text-primary mb-3">edit_calendar</span>
+                    <h4>BOOK</h4>
+                    <p class="text-muted">Select the worker, service, date and time.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <span class="material-symbols-outlined display-4 text-primary mb-3">event_busy</span>
+                    <h4>SCHEDULE</h4>
+                    <p class="text-muted">Automatically prevent conflicting worker bookings.</p>
+                </div>
+            </div>
+            <div class="col-md-6 offset-md-3 mt-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <span class="material-symbols-outlined display-4 text-primary mb-3">construction</span>
+                    <h4>EXECUTE & COMPLETE</h4>
+                    <p class="text-muted">Workers manage their daily job sequence. Track job completion and collect reviews.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="job-sequence-showcase py-5 bg-light rounded mt-5 p-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h3 class="fw-bold mb-4">TODAY'S JOB SEQUENCE</h3>
+                <p class="lead text-muted">Workers see their entire day organized perfectly, preventing overlaps and confusion.</p>
+            </div>
+            <div class="col-md-6">
+                <div class="list-group shadow-sm">
+                    <div class="list-group-item p-3 border-start border-4 border-primary">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-primary rounded-pill">#1</span>
+                            <span class="fw-bold text-muted">08:00 — 10:00</span>
+                        </div>
+                        <h5 class="mt-2 mb-1">Plumbing</h5>
+                        <p class="mb-0 text-muted small">Amit Patel &bull; Bilimora</p>
+                    </div>
+                    <div class="list-group-item p-3 border-start border-4 border-warning">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-warning text-dark rounded-pill">#2</span>
+                            <span class="fw-bold text-muted">10:30 — 12:00</span>
+                        </div>
+                        <h5 class="mt-2 mb-1">Electrical</h5>
+                        <p class="mb-0 text-muted small">Rahul Shah &bull; Navsari</p>
+                    </div>
+                    <div class="list-group-item p-3 border-start border-4 border-success">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success rounded-pill">#3</span>
+                            <span class="fw-bold text-muted">14:00 — 16:00</span>
+                        </div>
+                        <h5 class="mt-2 mb-1">AC Repair</h5>
+                        <p class="mb-0 text-muted small">Jay Patel &bull; Surat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="conflict-detection-showcase py-5 mt-5">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold">CONFLICT DETECTION</h3>
+            <p class="text-muted">Double-booking is a thing of the past.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-danger mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <span class="badge bg-secondary mb-2">Existing Job</span>
+                                <h6 class="mb-0">10:00 → 12:00</h6>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-danger mb-2">New Booking</span>
+                                <h6 class="mb-0">11:00 → 13:00</h6>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger mb-0 text-center">
+                            <strong>SCHEDULE CONFLICT</strong><br />
+                            This worker is already assigned during the selected time.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center my-3">
+                    <span class="material-symbols-outlined text-muted fs-2">arrow_downward</span>
+                </div>
+
+                <div class="card border-success shadow-sm">
+                    <div class="card-body text-center">
+                        <span class="badge bg-success mb-2">Alternative: 12:30 → 14:00</span>
+                        <h5 class="text-success mb-0 fw-bold">AVAILABLE</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

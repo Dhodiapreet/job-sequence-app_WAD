@@ -1,0 +1,89 @@
+@model JobSequenceApp.Models.WorkerProfile
+
+@{
+    ViewData["Title"] = "Worker Profile";
+}
+
+<div class="row mt-4">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">@Model.ApplicationUser?.FirstName @Model.ApplicationUser?.LastName</h4>
+                @if (Model.IsVerified)
+                {
+                    <span class="badge bg-success">Verified</span>
+                }
+            </div>
+            <div class="card-body">
+                <h5 class="text-primary">@Model.Profession</h5>
+                
+                <div class="mt-4">
+                    <h6>Biography</h6>
+                    <p>@Model.Biography</p>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h6>Skills & Expertise</h6>
+                        <p>@Model.Skills</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Service Details</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Experience:</strong> @Model.Experience</li>
+                            <li><strong>Pricing:</strong> $@Model.Pricing/hr</li>
+                            <li><strong>Service Area:</strong> @Model.ServiceArea</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
+                <hr class="my-4" />
+                
+                <div class="mt-4">
+                    <h5 class="mb-3 d-flex align-items-center">
+                        <span class="material-symbols-outlined text-warning me-2">star</span>
+                        Reviews (@Model.TotalReviews)
+                        <span class="ms-auto badge bg-light text-dark fs-6 border">@Model.AverageRating.ToString("0.0") / 5.0</span>
+                    </h5>
+                    
+                    @if (Model.Reviews != null && Model.Reviews.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
+                            {
+                                <div class="list-group-item list-group-item-action flex-column align-items-start border-0 shadow-sm mb-2 rounded bg-light">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">
+                                            @review.CustomerProfile?.ApplicationUser?.FirstName @review.CustomerProfile?.ApplicationUser?.LastName.Substring(0,1).
+                                        </h6>
+                                        <small class="text-muted">@review.CreatedAt.ToShortDateString()</small>
+                                    </div>
+                                    <p class="mb-1">
+                                        @for (int i = 0; i < review.Rating; i++)
+                                        {
+                                            <span class="material-symbols-outlined text-warning" style="font-size: 16px;">star</span>
+                                        }
+                                        @for (int i = review.Rating; i < 5; i++)
+                                        {
+                                            <span class="material-symbols-outlined text-muted" style="font-size: 16px;">star</span>
+                                        }
+                                    </p>
+                                    <small>@review.Comment</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted fst-italic">No reviews yet.</p>
+                    }
+                </div>
+
+                <div class="mt-5">
+                    <a asp-controller="Bookings" asp-action="Create" asp-route-workerId="@Model.Id" class="btn btn-success btn-lg w-100">Book Worker</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

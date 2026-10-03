@@ -1,0 +1,53 @@
+@model IEnumerable<JobSequenceApp.Models.Booking>
+
+@{
+    ViewData["Title"] = "Platform Bookings";
+}
+
+<h2>All Bookings</h2>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Customer</th>
+            <th>Worker</th>
+            <th>Service</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.CustomerProfile?.ApplicationUser?.FirstName @item.CustomerProfile?.ApplicationUser?.LastName</td>
+                <td>@item.WorkerProfile?.ApplicationUser?.FirstName @item.WorkerProfile?.ApplicationUser?.LastName</td>
+                <td>@item.Service</td>
+                <td>
+                    @item.ExpectedStartTime.ToShortDateString()<br />
+                    <small>@item.ExpectedStartTime.ToShortTimeString() - @item.ExpectedEndTime.ToShortTimeString()</small>
+                </td>
+                <td>
+                    @{
+                        var badgeClass = item.Status switch
+                        {
+                            "REQUESTED" => "bg-warning text-dark",
+                            "ACCEPTED" => "bg-primary",
+                            "DECLINED" => "bg-danger",
+                            "COMPLETED" => "bg-success",
+                            _ => "bg-secondary"
+                        };
+                    }
+                    <span class="badge @badgeClass">@item.Status</span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No bookings found on the platform.</div>
+}

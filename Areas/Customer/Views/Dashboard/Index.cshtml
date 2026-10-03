@@ -1,0 +1,71 @@
+@model JobSequenceApp.ViewModels.CustomerDashboardViewModel
+@{
+    ViewData["Title"] = "Customer Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">@Model.WelcomeMessage</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <a href="#" class="btn btn-primary btn-lg w-100 mb-2">Create New Booking</a>
+        </div>
+        <div class="col-md-6">
+            <a href="#" class="btn btn-outline-secondary btn-lg w-100 mb-2">Find Workers</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-info text-white">Active & Upcoming Bookings</div>
+                <div class="card-body">
+                    @if (!Model.ActiveBookings.Any() && !Model.UpcomingBookings.Any())
+                    {
+                        <p class="text-muted text-center my-4">No active or upcoming bookings.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach(var b in Model.ActiveBookings.Concat(Model.UpcomingBookings))
+                            {
+                                <li class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                      <h5 class="mb-1">@b.Title</h5>
+                                      <small>@b.RequestedDate.ToShortDateString()</small>
+                                    </div>
+                                    <p class="mb-1">@b.Description</p>
+                                    <span class="badge @(b.Status == "Pending" ? "bg-warning" : "bg-primary")">@b.Status</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success text-white">Recently Completed</div>
+                <div class="card-body">
+                    @if (!Model.CompletedBookings.Any())
+                    {
+                        <p class="text-muted text-center my-4">No recently completed bookings.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach(var b in Model.CompletedBookings)
+                            {
+                                <li class="list-group-item">
+                                    <h5 class="mb-1">@b.Title</h5>
+                                    <small class="text-muted">Requested: @b.RequestedDate.ToShortDateString()</small>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

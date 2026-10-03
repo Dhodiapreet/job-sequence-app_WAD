@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Identity
+@using JobSequenceApp.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<div class="d-flex align-items-center gap-3">
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="text-decoration-none text-dark fw-medium d-flex align-items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+        <span class="material-symbols-outlined me-1 text-muted">account_circle</span>
+        @User.Identity?.Name
+    </a>
+    <form class="m-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="submit" class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+            <span class="material-symbols-outlined me-1" style="font-size: 18px;">logout</span> Logout
+        </button>
+    </form>
+}
+else
+{
+    <a class="btn btn-outline-primary btn-sm" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <a class="btn btn-primary btn-sm" asp-area="Identity" asp-page="/Account/Login">Login</a>
+}
+</div>

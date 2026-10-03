@@ -1,0 +1,82 @@
+@model JobSequenceApp.ViewModels.WorkerDashboardViewModel
+@{
+    ViewData["Title"] = "Worker Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>@Model.WelcomeMessage</h2>
+        @if(Model.IsVerified)
+        {
+            <span class="badge bg-success p-2">Verified Profile</span>
+        }
+        else
+        {
+            <span class="badge bg-warning text-dark p-2">Pending Verification</span>
+        }
+    </div>
+
+    @if(Model.ActiveJob != null)
+    {
+        <div class="alert alert-primary shadow-sm" role="alert">
+            <h4 class="alert-heading">Current Active Job</h4>
+            <p><strong>Booking:</strong> @Model.ActiveJob.Booking?.Title</p>
+            <p><strong>Time:</strong> @Model.ActiveJob.StartTime.ToString("t") - @Model.ActiveJob.EndTime.ToString("t")</p>
+            <hr>
+            <p class="mb-0">Please mark as completed once finished.</p>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">Today's Sequence</div>
+                <div class="card-body">
+                    @if (!Model.TodaysJobs.Any())
+                    {
+                        <p class="text-muted text-center my-4">No jobs scheduled for today.</p>
+                    }
+                    else
+                    {
+                        <div class="list-group">
+                            @foreach(var j in Model.TodaysJobs)
+                            {
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                      <h5 class="mb-1">@j.Booking?.Title</h5>
+                                      <small>@j.StartTime.ToString("t")</small>
+                                    </div>
+                                    <p class="mb-1">@j.Booking?.Description</p>
+                                    <small class="text-muted">Status: @j.Status</small>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-secondary text-white">Upcoming Jobs</div>
+                <div class="card-body">
+                    @if (!Model.UpcomingJobs.Any())
+                    {
+                        <p class="text-muted text-center my-4">No upcoming jobs.</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach(var j in Model.UpcomingJobs)
+                            {
+                                <li class="list-group-item">
+                                    <strong>@j.StartTime.ToShortDateString() @j.StartTime.ToString("t")</strong> - @j.Booking?.Title
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

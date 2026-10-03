@@ -1,0 +1,37 @@
+@model IEnumerable<JobSequenceApp.Models.WorkerProfile>
+
+@{
+    ViewData["Title"] = "Available Workers";
+}
+
+<h2>Available Workers</h2>
+
+<form method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Search by profession, skill, or name..." />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var worker in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@worker.ApplicationUser?.FirstName @worker.ApplicationUser?.LastName</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@worker.Profession</h6>
+                    <p class="card-text">
+                        <strong>Skills:</strong> @worker.Skills<br />
+                        <strong>Experience:</strong> @worker.Experience<br />
+                        <strong>Pricing:</strong> $@worker.Pricing/hr<br />
+                        <strong>Verified:</strong> @(worker.IsVerified ? "Yes" : "No")
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <a asp-action="Details" asp-route-id="@worker.Id" class="btn btn-outline-primary w-100">View Profile</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

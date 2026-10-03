@@ -1,0 +1,84 @@
+@model IEnumerable<JobSequenceApp.Models.JobSequence>
+
+@{
+    ViewData["Title"] = "Daily Schedule";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><span class="material-symbols-outlined align-middle me-2 fs-2">calendar_month</span>Daily Schedule</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-lg-6 mx-auto">
+        @{
+            var groupedSchedule = Model.GroupBy(m => m.StartTime.Date);
+        }
+
+        @foreach (var dayGroup in groupedSchedule)
+        {
+            <h4 class="mt-4 mb-3 text-muted fw-bold">
+                @if (dayGroup.Key == DateTime.Today)
+                {
+                    <text>TODAY'S JOB SEQUENCE</text>
+                }
+                else if (dayGroup.Key == DateTime.Today.AddDays(1))
+                {
+                    <text>TOMORROW'S JOB SEQUENCE</text>
+                }
+                else
+                {
+                    @dayGroup.Key.ToShortDateString().ToUpper()
+                }
+            </h4>
+
+            <div class="d-flex flex-column gap-3">
+                @{ int index = 1; }
+                @foreach (var sequence in dayGroup)
+                {
+                    <a asp-action="Details" asp-route-id="@sequence.Id" class="text-decoration-none text-dark d-block mb-3">
+                        <div class="card border-0 shadow-sm h-100 hover-card">
+                            <div class="card-body p-4 position-relative">
+                                <div class="position-absolute top-0 start-0 h-100 bg-primary" style="width: 6px; border-top-left-radius: 8px; border-bottom-left-radius: 8px;"></div>
+                                
+                                <div class="d-flex align-items-center mb-2 text-muted">
+                                    <span class="badge bg-primary rounded-pill me-3 fs-6 px-3">#@index</span>
+                                    <span class="material-symbols-outlined fs-5 me-1">schedule</span>
+                                    <span class="fw-bold fs-5 text-dark">@sequence.StartTime.ToShortTimeString() &mdash; @sequence.EndTime.ToShortTimeString()</span>
+                                </div>
+                                
+                                <div class="ms-5 mt-3">
+                                    <h4 class="mb-2">@sequence.Booking?.Service</h4>
+                                    <div class="d-flex align-items-center text-secondary mb-1">
+                                        <span class="material-symbols-outlined fs-6 me-2">person</span>
+                                        <span>@sequence.Booking?.CustomerProfile?.ApplicationUser?.FirstName @sequence.Booking?.CustomerProfile?.ApplicationUser?.LastName</span>
+                                    </div>
+                                    <div class="d-flex align-items-center text-secondary mb-3">
+                                        <span class="material-symbols-outlined fs-6 me-2">location_on</span>
+                                        <span>@sequence.Booking?.Location</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center text-primary fw-medium">
+                                            <span class="material-symbols-outlined fs-6 me-2">radio_button_checked</span>
+                                            <span>@sequence.Status.ToUpper()</span>
+                                        </div>
+                                        <span class="text-primary fw-bold">View Job &rarr;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    index++;
+                }
+            </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="text-center p-5 mt-4 bg-white rounded shadow-sm border">
+                <span class="material-symbols-outlined text-muted" style="font-size: 48px;">event_busy</span>
+                <h4 class="mt-3 text-muted">No Scheduled Jobs</h4>
+                <p class="text-muted">You don't have any jobs in your upcoming sequence.</p>
+            </div>
+        }
+    </div>
+</div>

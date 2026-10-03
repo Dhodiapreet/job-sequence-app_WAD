@@ -1,0 +1,57 @@
+@model IEnumerable<JobSequenceApp.Models.Booking>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<h2>My Bookings</h2>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Worker</th>
+            <th>Service</th>
+            <th>Location</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.WorkerProfile?.ApplicationUser?.FirstName @item.WorkerProfile?.ApplicationUser?.LastName</td>
+                <td>@item.Service</td>
+                <td>@item.Location</td>
+                <td>
+                    @item.ExpectedStartTime.ToShortDateString()<br />
+                    <small>@item.ExpectedStartTime.ToShortTimeString() - @item.ExpectedEndTime.ToShortTimeString()</small>
+                </td>
+                <td>
+                    @{
+                        var badgeClass = item.Status switch
+                        {
+                            "REQUESTED" => "bg-warning text-dark",
+                            "ACCEPTED" => "bg-primary",
+                            "DECLINED" => "bg-danger",
+                            "COMPLETED" => "bg-success",
+                            _ => "bg-secondary"
+                        };
+                    }
+                    <span class="badge @badgeClass">@item.Status</span>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">You have no bookings yet.</div>
+}
