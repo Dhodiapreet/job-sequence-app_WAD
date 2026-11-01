@@ -75,3 +75,15 @@ body {
     margin: 0;
     padding: 0;
 }
+
+/* Compatibility aliases used by layout.css and components.css */
+:root {
+    --color-text: var(--color-on-surface);
+    --color-text-secondary: var(--color-on-surface-variant);
+    --color-border: var(--color-outline-variant);
+    --color-primary-light: #e8efff;
+    --color-primary-hover: #003ba3;
+    --color-success-bg: #dcfce7;
+    --color-warning-bg: #fef3c7;
+    --color-danger-bg: #fee2e2;
+}

@@ -50,10 +50,10 @@
                     <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
                         <span class="material-symbols-outlined me-3">dashboard</span> Dashboard
                     </a>
-                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Users" asp-action="Index">
                         <span class="material-symbols-outlined me-3">group</span> Users
                     </a>
-                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Workers" asp-action="Index">
                         <span class="material-symbols-outlined me-3">engineering</span> Workers
                     </a>
                     <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Bookings" asp-action="Index">
@@ -62,14 +62,11 @@
                     <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Jobs" asp-action="Index">
                         <span class="material-symbols-outlined me-3">work</span> Jobs
                     </a>
-                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Workers" asp-action="Index" asp-route-pendingOnly="true">
                         <span class="material-symbols-outlined me-3">verified</span> Verification
                     </a>
-                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Reports" asp-action="Index">
                         <span class="material-symbols-outlined me-3">bar_chart</span> Reports
-                    </a>
-                    <a class="sidebar-nav-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                        <span class="material-symbols-outlined me-3">settings</span> Settings
                     </a>
                 }
                 else if (User.IsInRole("Customer"))
