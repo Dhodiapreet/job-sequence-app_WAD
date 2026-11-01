@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Platform Reports";
+}
+<div class="container-fluid py-3">
+    <div class="mb-4"><h2 class="mb-1">Platform Reports</h2><p class="text-muted mb-0">Live summary generated from the application database.</p></div>
+    <div class="row g-3">
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Total users</div><div class="display-6 fw-semibold">@ViewBag.TotalUsers</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Customers</div><div class="display-6 fw-semibold">@ViewBag.TotalCustomers</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Workers</div><div class="display-6 fw-semibold">@ViewBag.TotalWorkers</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Total bookings</div><div class="display-6 fw-semibold">@ViewBag.TotalBookings</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Verified workers</div><div class="display-6 fw-semibold text-success">@ViewBag.VerifiedWorkers</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Pending verifications</div><div class="display-6 fw-semibold text-warning">@ViewBag.PendingWorkers</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Completed bookings</div><div class="display-6 fw-semibold text-success">@ViewBag.CompletedBookings</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Cancelled bookings</div><div class="display-6 fw-semibold text-danger">@ViewBag.CancelledBookings</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Total jobs</div><div class="display-6 fw-semibold">@ViewBag.TotalJobs</div></div></div></div>
+        <div class="col-6 col-xl-3"><div class="card border-0 shadow-sm h-100"><div class="card-body"><div class="text-muted">Completed jobs</div><div class="display-6 fw-semibold text-success">@ViewBag.CompletedJobs</div></div></div></div>
+    </div>
+    <div class="d-flex flex-wrap gap-2 mt-4"><a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-outline-primary">View bookings</a><a asp-area="Admin" asp-controller="Jobs" asp-action="Index" class="btn btn-outline-primary">View jobs</a></div>
+</div>
